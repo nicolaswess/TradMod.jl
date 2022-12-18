@@ -70,12 +70,6 @@ using Test
     
     @test size(Cj) == (N, 1)
 
-    # verify that a U.S. 40% tariff yields the same effects as in Costinot, A., & Rodríguez-Clare, A. (2014) 
-    # note: I changed the welfare effect for Russia from -0.12 to -0.13 (I suspect it's a typo in the publication)
-    costclar = [-.28; -.13; -.26; -.16; -2.28; -.46; -.08; -.2; -.26; -.07; -.1; -.13; -.31; -.06; -.17; -.14; -.25; -1.58; -.07; -.11; -.34; -1.67; -.34; -.08; -.09; .01; -.13; -.04; -.1; -.19; -.02; -.76; .63; -.97]
-
-    @test costclar == round.(t.Welfare_effect;digits = 2)
-
     # verify that zero tariff has zero effects
     x_fsolve, ysjk3D, Dj_h3D, tijs3D, tijs_p3D, phiijs_h3D = SOLVE_SHOCK(indx,0.0,Yi3D,Yj3D,Lijs3D,Dj3D,betajs3D,epsilon_s3D,yis3D,alpha_tilde_sjk3D,theta_s3D,eta_s3D,delta_s3D,sigma_s3D,LABOR,mu,N,S)
     Cj = MLZ_WELFARE_CORRECTED(x_fsolve, N , S, mu, Yi3D, Yj3D, ysjk3D, Ris3D, Dj3D, Dj_h3D, alpha_tilde_sjk3D, betajs3D, consjs3D, epsilon_s3D, theta_s3D, eta_s3D, delta_s3D, sigma_s3D, tijs3D, tijs_p3D, phiijs_h3D, Lijs3D, LABOR)
