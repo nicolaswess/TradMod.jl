@@ -2,7 +2,6 @@ function MLZ_WELFARE_CORRECTED(x_fsolve, N , S, mu, Yi3D, Yj3D, ysjk3D, Ris3D, D
 
     ln = ones(N,1)
 
-    # NEW:------------------------------
     # construct 3D cubes from 1D vector X0
     cis_h = x_fsolve[1 : N * S, 1]
     cis_h2D = reshape(cis_h,(S,N))
@@ -16,14 +15,11 @@ function MLZ_WELFARE_CORRECTED(x_fsolve, N , S, mu, Yi3D, Yj3D, ysjk3D, Ris3D, D
     wj_h3D = permutedims(wi_h3D, (2, 1, 3))
     ysjk_h3D = repeat(yis_h2D, outer = [1 1 S])
     wsjk_h3D = repeat(wi_h', outer = [S 1 S])
-    #-----------------------------------
 
-    # NEW:------------------------------
     betajk_sjk3D = repeat(permutedims(cat(consjs3D[1,:,:], dims=3),(3,1,2)), outer = [S 1 1])
     epsilon_sjk3D = repeat(reshape(epsilon_s3D[1,1,:],(S,1)), outer = [1 N S])
     deltas_sjk3D = repeat(reshape(delta_s3D[1,1,:],(S,1)), outer = [1 N S])
     etas_sjk3D = repeat(reshape(eta_s3D[1,1,:],(S,1)), outer = [1 N S])
-    #-----------------------------------
     
     # construct various aggregations of alpha
     alpha_sjk3D = alpha_tilde_sjk3D
@@ -42,7 +38,6 @@ function MLZ_WELFARE_CORRECTED(x_fsolve, N , S, mu, Yi3D, Yj3D, ysjk3D, Ris3D, D
     Ejs3D = betajs3D .* kj3D .* (Yj3D + Dj3D + AUX6_INT) + AUX5_INT
     
     # equation 15
-    # NEW:------------------------------
     AUX0 = Lijs3D .* (yis_h3D .* wi_h3D ./ cis_h3D).^delta_s3D .* (cis_h3D .* phiijs_h3D).^(-theta_s3D) .* (cis_h3D.^(-eta_s3D .* delta_s3D))
     AUX1 = repeat(sum(AUX0, dims = 1), outer = [N 1 1])
 
@@ -85,6 +80,6 @@ function MLZ_WELFARE_CORRECTED(x_fsolve, N , S, mu, Yi3D, Yj3D, ysjk3D, Ris3D, D
     AUX11 = repeat(prod(prod(AUX10sjk, dims = 3), dims = 1), outer = [N 1 S])
     Cj3D = (wj_h3D + Rj_p3D .* pij_p3D ./ (Yj3D .* (1 .- pij_p3D))) .* AUX11 ./ wj_h3D
     Cj = reshape(Cj3D[1,:,1],(N,1))
-    #-----------------------------------
+    
     return Cj
 end
